@@ -16,9 +16,9 @@ def generate_tag_set_list():
     return r
 
 
-def populate_gallery(tag_set) -> list[str]:  # TODO: Call when tag set changes and get all images in the new location
+def populate_gallery(tag_set) -> list[str]:
     r = []
-    ex = ("*.jpeg", "*.jpg", "*.png", "*.svg")
+    ex = ("*.[Jj][Pp][Ee][Gg]", "*.[Jj][Pp][Gg]", "*.[Pp][Nn][Gg]", "*.[Ss][Vv][Gg]")
     d = os.path.join(tag_set_dir, tag_set)
 
     for e in ex:
