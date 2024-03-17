@@ -1,5 +1,4 @@
-import gradio as gr
-
+from event import *
 from utility import *
 
 startup_tag = startup_check()
@@ -7,14 +6,14 @@ startup_tag = startup_check()
 with gr.Blocks() as SDWebTag:
     with gr.Row():
         with gr.Column():
-            tag_set = gr.Dropdown(label="Tag Set", allow_custom_value=True, elem_id="tag_set",
-                                  choices=generate_tag_set_list(), value=startup_tag)
+            tag_set_dropdown = callback_update_tag_dropdown(startup_tag)
             gallery = gr.Gallery(label="Gallery", show_label=False, elem_id="gallery", object_fit="contain",
                                  type="filepath", value=populate_gallery(startup_tag))
         with gr.Column():
             add = gr.Textbox(label="Add Tags")
             tags = gr.CheckboxGroup(label="Tags", elem_id="tags")
 
-    tag_set.input(switch_tag_set, inputs=tag_set, outputs=gallery)
+    tag_set_dropdown.input(callback_update_tag_dropdown, inputs=tag_set_dropdown, outputs=tag_set_dropdown)
+    tag_set_dropdown.input(callback_update_gallery, inputs=tag_set_dropdown, outputs=gallery)
 
 SDWebTag.launch()

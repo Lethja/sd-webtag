@@ -35,18 +35,14 @@ def startup_check():
 
     if len(existing_tag_sets) == 0:
         set_tag = "Default"
-        os.mkdir(os.path.join(tag_set_dir, set_tag))
+        tag_set_directory(set_tag)
     else:
         set_tag = existing_tag_sets[0]
 
     return set_tag
 
 
-def switch_tag_set(tag_set):
-    if tag_set is not list:
-        fullpath = os.path.join(tag_set_dir, tag_set)
-        if not os.path.isdir(fullpath):
-            os.mkdir(fullpath)
-
-    return populate_gallery(tag_set)
-
+def tag_set_directory(tag_set):
+    fullpath = os.path.join(tag_set_dir, tag_set)
+    if not os.path.isdir(fullpath):
+        os.mkdir(fullpath)
