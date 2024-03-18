@@ -1,25 +1,33 @@
 import glob
 import os
+import pathlib
+import shutil
 
-tag_set_dir = os.path.abspath("Sets")
+global_tag_sets_dir = os.path.abspath("Sets")
 
 
 def generate_tag_set_list():
     r = []
-    ld = os.listdir(tag_set_dir)
+    ld = os.listdir(global_tag_sets_dir)
 
     for e in ld:
-        if os.path.isdir(os.path.join(tag_set_dir, e)):
+        if os.path.isdir(os.path.join(global_tag_sets_dir, e)):
             r.append(e)
 
     r.sort()
     return r
 
 
+def move_files_to_tag_set(files, tag_set):
+    for file in files:
+        p = pathlib.Path(file)
+        shutil.move(p, pathlib.PurePath(global_tag_sets_dir + "/" + tag_set + "/" + p.name))
+
+
 def populate_gallery(tag_set) -> list[str]:
     r = []
     ex = ("*.[Jj][Pp][Ee][Gg]", "*.[Jj][Pp][Gg]", "*.[Pp][Nn][Gg]", "*.[Ss][Vv][Gg]")
-    d = os.path.join(tag_set_dir, tag_set)
+    d = os.path.join(global_tag_sets_dir, tag_set)
 
     for e in ex:
         r.extend(glob.glob(os.path.join(d, e)))
@@ -28,8 +36,8 @@ def populate_gallery(tag_set) -> list[str]:
 
 
 def startup_check():
-    if not os.path.isdir(tag_set_dir):
-        os.mkdir(tag_set_dir)
+    if not os.path.isdir(global_tag_sets_dir):
+        os.mkdir(global_tag_sets_dir)
 
     existing_tag_sets = generate_tag_set_list()
 
@@ -43,6 +51,6 @@ def startup_check():
 
 
 def tag_set_directory(tag_set):
-    fullpath = os.path.join(tag_set_dir, tag_set)
+    fullpath = os.path.join(global_tag_sets_dir, tag_set)
     if not os.path.isdir(fullpath):
         os.mkdir(fullpath)
