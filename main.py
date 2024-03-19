@@ -20,6 +20,9 @@ def init():
 
                 gallery = gr.Gallery(label="Gallery",
                                      show_label=False,
+                                     show_share_button=False,
+                                     show_download_button=False,
+                                     interactive=False,
                                      elem_id="gallery",
                                      object_fit="contain",
                                      type="filepath")
