@@ -27,7 +27,9 @@ def init():
                 with gr.Accordion("Add Tags", open=False):
                     add = gr.Textbox(label="Add Tags", show_label=False)
 
-                tags = gr.CheckboxGroup(label="Tags", elem_id="tags")
+                tags = gr.CheckboxGroup(label="Tags",
+                                        elem_id="tags",
+                                        interactive=True)
 
         SDWebTag.load(event_load_page, outputs=[tag_set_dropdown, gallery])
 
@@ -38,6 +40,8 @@ def init():
         tag_set_dropdown.input(event_update_gallery,
                                inputs=tag_set_dropdown,
                                outputs=gallery)
+
+        gallery.select(event_update_tag_checkbox_group, inputs=[tag_set_dropdown, gallery], outputs=tags)
 
         upload.upload(event_upload_files,
                       inputs=[upload, tag_set_dropdown],

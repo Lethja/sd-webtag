@@ -37,5 +37,15 @@ def event_update_tag_dropdown(choice):
                        value=choice)
 
 
+def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):
+    all_tags = get_all_tags(tag_set)
+    tags = get_image_tag(tag_set, name[evt.index][0])
+    return gr.CheckboxGroup(label="Tags",
+                            elem_id="tags",
+                            interactive=True,
+                            choices=all_tags,
+                            value=tags)
+
+
 def event_update_tag_state(choice):
     return choice
