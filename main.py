@@ -28,7 +28,7 @@ def init():
                                      type="filepath")
             with gr.Column(scale=2):
                 with gr.Accordion("Add Tags", open=False):
-                    add = gr.Textbox(label="Add Tags", show_label=False)
+                    add = gr.Textbox(label="Add Tags", show_label=False, container=False)
 
                 tags = gr.CheckboxGroup(label="Tags",
                                         elem_id="tags",

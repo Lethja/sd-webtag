@@ -33,6 +33,7 @@ def event_update_tag_dropdown(choice):
     return gr.Dropdown(show_label=False,
                        allow_custom_value=True,
                        elem_id="tag_set",
+                       container=False,
                        choices=generate_tag_set_list(),
                        value=choice)
 
