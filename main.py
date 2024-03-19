@@ -6,9 +6,9 @@ def init():
     global global_tag_set_state
     global_tag_set_state = startup_check()
 
-    with gr.Blocks() as SDWebTag:
+    with gr.Blocks(css=".gradio-container {min-width: 100% !important;}") as SDWebTag:
         with gr.Row():
-            with gr.Column():
+            with gr.Column(scale=1):
                 with gr.Accordion("Tag Set"):
                     tag_set_dropdown = event_update_tag_dropdown(global_tag_set_state)
                     with gr.Blocks():
@@ -26,7 +26,7 @@ def init():
                                      elem_id="gallery",
                                      object_fit="contain",
                                      type="filepath")
-            with gr.Column():
+            with gr.Column(scale=2):
                 with gr.Accordion("Add Tags", open=False):
                     add = gr.Textbox(label="Add Tags", show_label=False)
 
