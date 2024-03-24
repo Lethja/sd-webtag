@@ -7,12 +7,14 @@ def args_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument("--listen",
                         action="store_true",
-                        help="Listen to all network traffic on the local network")
+                        help="Accept connections from everywhere with direct access to the server. " +
+                             "In a home/office environment this usually means other devices in the same IPv4 subnet")
 
     parser.add_argument("--share",
                         action="store_true",
                         default=False,
-                        help="Use the Gradio tunnel make the server over the internet to friends (and strangers)")
+                        help="Create a Gradio SSH tunnel to make this server accessible from the Internet " +
+                             "to friends and strangers alike through gratio.live")
     return parser.parse_args()
 
 
