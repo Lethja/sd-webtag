@@ -28,13 +28,22 @@ def init():
                                      type="filepath")
             with gr.Column(scale=2):
                 with gr.Accordion("Add Tags", open=False):
-                    add = gr.Textbox(label="Add Tags", show_label=False, container=False)
+                    add_tag_textbox = gr.Textbox(label="Add Tags", show_label=False, container=False)
 
-                tags = gr.CheckboxGroup(label="Tags",
-                                        elem_id="tags",
-                                        interactive=True)
+                tag_list = gr.CheckboxGroup(label="Tags",
+                                            elem_id="tags",
+                                            interactive=True)
 
-        SDWebTag.load(event_load_page, outputs=[tag_set_dropdown, gallery])
+        SDWebTag.load(event_load_page,
+                      outputs=[tag_set_dropdown, gallery])
+
+        add_tag_textbox.submit(event_add_tag,
+                               inputs=[add_tag_textbox, tag_set_dropdown, tag_list],
+                               outputs=tag_list)
+
+        tag_list.input(event_check_tag,
+                       inputs=[tag_set_dropdown, tag_list],
+                       outputs=tag_list)
 
         tag_set_dropdown.input(event_update_tag_dropdown,
                                inputs=tag_set_dropdown,
@@ -44,7 +53,9 @@ def init():
                                inputs=tag_set_dropdown,
                                outputs=gallery)
 
-        gallery.select(event_update_tag_checkbox_group, inputs=[tag_set_dropdown, gallery], outputs=tags)
+        gallery.select(event_update_tag_checkbox_group,
+                       inputs=[tag_set_dropdown, gallery],
+                       outputs=tag_list)
 
         upload.upload(event_upload_files,
                       inputs=[upload, tag_set_dropdown],
