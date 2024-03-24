@@ -40,7 +40,8 @@ def event_update_tag_dropdown(choice):
 
 def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):
     all_tags = get_all_tags(tag_set)
-    tags = get_image_tag(tag_set, name[evt.index][0])
+    file = get_image_tag_file(tag_set, name[evt.index][0])
+    tags = read_tag_file(file)
     return gr.CheckboxGroup(label="Tags",
                             elem_id="tags",
                             interactive=True,

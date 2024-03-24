@@ -36,7 +36,7 @@ def get_all_tags(tag_set):
     return t
 
 
-def get_image_tag(tag_set, name):
+def get_image_tag_file(tag_set, name):
     global global_tag_sets_dir
     g = pathlib.PurePath(name)
     p = pathlib.PurePath(global_tag_sets_dir + "/" + tag_set + "/" + g.name)
@@ -46,7 +46,7 @@ def get_image_tag(tag_set, name):
     if len(files) > 1:
         merge_tag_files(files, file)
 
-    return read_tag_file(file)
+    return file
 
 
 def merge_tag_files(files, merge_file):
@@ -62,7 +62,7 @@ def merge_tag_files(files, merge_file):
 
 
 def read_tag_file(file):
-    if not os.path.exists(file) or os.path.getsize(file) > 1024:
+    if not os.path.exists(file) or os.path.getsize(file) > 2048:
         return []
 
     f = io.open(file)
