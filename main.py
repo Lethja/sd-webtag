@@ -16,7 +16,8 @@ def init():
                             upload = gr.UploadButton(label="Import",
                                                      file_types=["image", "text"],
                                                      file_count="multiple")
-                            download = gr.DownloadButton("Export")
+                            export = gr.Button("Export")
+                            download = gr.DownloadButton("Download")
 
                 gallery = gr.Gallery(label="Gallery",
                                      show_label=False,
@@ -41,6 +42,10 @@ def init():
                                inputs=[add_tag_textbox, tag_set_dropdown, tag_list],
                                outputs=tag_list)
 
+        export.click(event_export_tag_set,
+                     inputs=tag_set_dropdown,
+                     outputs=download)
+
         tag_list.input(event_check_tag,
                        inputs=[tag_set_dropdown, tag_list],
                        outputs=tag_list)
@@ -60,8 +65,6 @@ def init():
         upload.upload(event_upload_files,
                       inputs=[upload, tag_set_dropdown],
                       outputs=gallery)
-
-        download.click(event_download_tag_set)
 
     return SDWebTag
 

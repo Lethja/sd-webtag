@@ -123,3 +123,11 @@ def write_tags_to_file(tags, file):
     f = io.open(file, "w")
     f.write(s)
     f.close()
+
+
+def zip_create_from_directory(directory):
+    from datetime import datetime
+    d = pathlib.PurePath(directory)
+    n = d.name + " " + datetime.utcnow().isoformat()
+
+    return shutil.make_archive(n, "zip", d)

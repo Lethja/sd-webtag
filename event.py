@@ -38,9 +38,10 @@ def event_check_tag(tag_set, tag_list):
     return tag_list
 
 
-def event_download_tag_set():
-    # Placeholder
-    print("Download Pressed")
+def event_export_tag_set(tag_set):
+    p = os.path.join(global_tag_sets_dir, tag_set)
+    z = zip_create_from_directory(p)
+    return gr.DownloadButton("Download", value=z)
 
 
 def event_load_page():
