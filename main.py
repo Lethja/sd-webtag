@@ -26,12 +26,18 @@ def init():
                 with gr.Accordion("Tag Set"):
                     tag_set_dropdown = event_update_tag_dropdown(global_tag_set_state)
                     with gr.Blocks():
-                        with gr.Row():
-                            upload = gr.UploadButton(label="Import",
-                                                     file_types=["image", "text"],
-                                                     file_count="multiple")
-                            export = gr.Button("Export")
-                            download = gr.DownloadButton("Download")
+                        upload = gr.UploadButton(label="Upload/Import",
+                                                 file_types=["image", "text"],
+                                                 file_count="multiple")
+
+                    with gr.Accordion("Exports", open=False):
+                        export = gr.Button("Export Tag Set")
+                        explore = gr.FileExplorer(label="Exports",
+                                                  file_count="single",
+                                                  glob="*.zip",
+                                                  root_dir=global_zip_sets_dir,
+                                                  interactive=True)
+                        download = gr.DownloadButton("Download Export", interactive=False)
 
                 gallery = gr.Gallery(label="Gallery",
                                      show_label=False,
@@ -56,9 +62,14 @@ def init():
                                inputs=[add_tag_textbox, tag_set_dropdown, tag_list],
                                outputs=tag_list)
 
+        explore.change(event_explore_check,
+                       inputs=explore,
+                       outputs=download)
+
         export.click(event_export_tag_set,
                      inputs=tag_set_dropdown,
-                     outputs=download)
+                     outputs=explore,
+                     show_progress="full")
 
         tag_list.input(event_check_tag,
                        inputs=[tag_set_dropdown, tag_list],

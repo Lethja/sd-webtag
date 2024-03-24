@@ -5,6 +5,7 @@ import pathlib
 import shutil
 
 global_tag_sets_dir = os.path.abspath("Sets")
+global_zip_sets_dir = os.path.abspath("Zips")
 
 
 def generate_tag_set_list():
@@ -97,6 +98,9 @@ def populate_gallery(tag_set) -> list[str]:
 
 
 def startup_check():
+    if not os.path.isdir(global_zip_sets_dir):
+        os.mkdir(global_zip_sets_dir)
+
     if not os.path.isdir(global_tag_sets_dir):
         os.mkdir(global_tag_sets_dir)
 
@@ -126,11 +130,8 @@ def write_tags_to_file(tags, file):
 
 
 def zip_create_from_directory(directory):
-    if not os.path.isdir("Zips"):
-        os.mkdir("Zips")
-
     from datetime import datetime
     d = pathlib.PurePath(directory)
-    n = d.name + " " + datetime.utcnow().isoformat()
+    n = d.name + " " + datetime.utcnow().isoformat(timespec="seconds")
 
-    return shutil.make_archive("Zips/" + n, "zip", d)
+    return shutil.make_archive(global_zip_sets_dir + "/" + n, "zip", d)

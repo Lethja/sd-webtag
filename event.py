@@ -38,10 +38,17 @@ def event_check_tag(tag_set, tag_list):
     return tag_list
 
 
+def event_explore_check(z):
+    return gr.DownloadButton("Download Export", value=z, interactive=True if z else False)
+
+
 def event_export_tag_set(tag_set):
     p = os.path.join(global_tag_sets_dir, tag_set)
-    z = zip_create_from_directory(p)
-    return gr.DownloadButton("Download", value=z)
+    zip_create_from_directory(p)
+    return gr.FileExplorer(label="Exports",
+                           glob="*.zip",
+                           height=500,
+                           root_dir=global_zip_sets_dir)
 
 
 def event_load_page():
