@@ -126,8 +126,11 @@ def write_tags_to_file(tags, file):
 
 
 def zip_create_from_directory(directory):
+    if not os.path.isdir("Zips"):
+        os.mkdir("Zips")
+
     from datetime import datetime
     d = pathlib.PurePath(directory)
     n = d.name + " " + datetime.utcnow().isoformat()
 
-    return shutil.make_archive(n, "zip", d)
+    return shutil.make_archive("Zips/" + n, "zip", d)
