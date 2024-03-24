@@ -1,5 +1,19 @@
+import argparse
 from event import *
 from utility import *
+
+
+def args_parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--listen",
+                        action="store_true",
+                        help="Listen to all network traffic on the local network")
+
+    parser.add_argument("--share",
+                        action="store_true",
+                        default=False,
+                        help="Use the Gradio tunnel make the server over the internet to friends (and strangers)")
+    return parser.parse_args()
 
 
 def init():
@@ -69,4 +83,6 @@ def init():
     return SDWebTag
 
 
-init().launch()
+args = args_parse()
+init().launch(share=args.share,
+              server_name="0.0.0.0" if args.listen else "127.0.0.1")
