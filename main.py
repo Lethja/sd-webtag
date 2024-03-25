@@ -1,21 +1,5 @@
-import argparse
 from event import *
 from utility import *
-
-
-def args_parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--listen",
-                        action="store_true",
-                        help="Accept connections from everywhere with direct access to the server. " +
-                             "In a home/office environment this usually means other devices in the same IPv4 subnet")
-
-    parser.add_argument("--share",
-                        action="store_true",
-                        default=False,
-                        help="Create a Gradio SSH tunnel to make this server accessible from the Internet " +
-                             "to friends and strangers alike through gratio.live")
-    return parser.parse_args()
 
 
 def init():
@@ -37,7 +21,8 @@ def init():
                         explore = gr.FileExplorer(label="Exports",
                                                   file_count="single",
                                                   glob="*.zip",
-                                                  root_dir=global_zip_sets_dir,
+                                                  height=200,
+                                                  root_dir=zip_dir(),
                                                   interactive=True)
                         download = gr.DownloadButton("Download Export", interactive=False)
 
