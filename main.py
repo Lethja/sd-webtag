@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from event import *
 from utility import *
 
