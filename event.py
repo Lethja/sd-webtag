@@ -98,3 +98,8 @@ def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):
 
 def event_update_tag_state(choice):
     return choice
+
+
+def set_tag_set_state(state):
+    global global_tag_set_state
+    global_tag_set_state = state

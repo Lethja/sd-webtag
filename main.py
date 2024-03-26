@@ -3,8 +3,7 @@ from utility import *
 
 
 def init():
-    global global_tag_set_state
-    global_tag_set_state = startup_check()
+    set_tag_set_state(startup_check())
 
     with gr.Blocks(css=".gradio-container {min-width: 100% !important;}") as SDWebTag:
         with gr.Row():
