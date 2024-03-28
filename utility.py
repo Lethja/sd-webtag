@@ -72,8 +72,8 @@ def get_all_tags(tag_set):
 def get_image_tag_file(tag_set, name):
     global global_tag_sets_dir
     g = pathlib.PurePath(name)
-    p = pathlib.PurePath(tag_dir() + "/" + tag_set + "/" + g.name)
-    files = glob.glob(os.path.join(p, "*.[Tt][Xx][Tt]"))
+    p = pathlib.PurePath(tag_dir() + "/" + tag_set + "/" + g.stem)
+    files = glob.glob(os.path.join(p, ".[Tt][Xx][Tt]"))
     file = str(p) + ".txt"
 
     if len(files) > 1:
