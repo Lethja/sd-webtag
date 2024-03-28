@@ -139,7 +139,7 @@ def startup_check():
 
     existing_tag_sets = generate_tag_set_list()
 
-    if len(existing_tag_sets) == 0:
+    if not existing_tag_sets or len(existing_tag_sets) == 0:
         set_tag = "Default"
         tag_set_directory(set_tag)
     else:

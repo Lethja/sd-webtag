@@ -2,6 +2,7 @@ import gradio as gr
 
 from utility import *
 
+# TODO: Remove these globals if possible, use gr.State() object(s) instead
 global_tag_set_state = None
 global_tag_set_image = None
 
@@ -98,6 +99,11 @@ def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):
 
 def event_update_tag_state(choice):
     return choice
+
+
+def set_tag_get_state():
+    global global_tag_set_state
+    return global_tag_set_state
 
 
 def set_tag_set_state(state):

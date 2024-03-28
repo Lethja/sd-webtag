@@ -11,7 +11,7 @@ def init():
         with gr.Row():
             with gr.Column(scale=1):
                 with gr.Accordion("Tag Set"):
-                    tag_set_dropdown = event_update_tag_dropdown(global_tag_set_state)
+                    tag_set_dropdown = event_update_tag_dropdown(set_tag_get_state())
                     with gr.Blocks():
                         upload = gr.UploadButton(label="Upload/Import",
                                                  file_types=["image", "text"],
