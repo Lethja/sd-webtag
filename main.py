@@ -54,10 +54,13 @@ def init():
                        inputs=explore,
                        outputs=download)
 
-        export.click(event_export_tag_set,
+        # TODO: Workaround: https://github.com/gradio-app/gradio/issues/7788
+        export.click(event_export_reset,
                      inputs=tag_set_dropdown,
-                     outputs=explore,
-                     show_progress="full")
+                     outputs=explore
+                     ).then(event_export_tag_set,
+                            inputs=tag_set_dropdown,
+                            outputs=explore)
 
         tag_list.input(event_check_tag,
                        inputs=[tag_set_dropdown, tag_list],

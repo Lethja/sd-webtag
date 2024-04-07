@@ -43,15 +43,20 @@ def event_explore_check(z):
     return gr.DownloadButton("Download Export", value=z, interactive=True if z else False)
 
 
+def event_export_reset(tag_set):
+    # TODO: Workaround: https://github.com/gradio-app/gradio/issues/7788
+    p = os.path.join(tag_dir(), tag_set)
+    return gr.FileExplorer(label="Exporting",
+                           height=200,
+                           root_dir=str(p))
+
+
 def event_export_tag_set(tag_set):
     p = os.path.join(tag_dir(), tag_set)
     zip_create_from_directory(p)
     return gr.FileExplorer(label="Exports",
                            glob="*.zip",
                            height=200,
-                           # TODO: Internal Gradio bug prevents FileExplorer from updating new entries
-                           #  https://github.com/gradio-app/gradio/issues/7788
-                           #  Workaround: Reload the page after clicking export
                            root_dir=zip_dir())
 
 
