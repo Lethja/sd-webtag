@@ -12,7 +12,7 @@ def event_add_tag(add_tag, tag_set, tag_list):
     k = 0
 
     for i in range(len(split)):
-        split[i] = split[i].strip()
+        split[i] = split[i].strip().title()
         if len(split[i]) and split[i] not in tag_list:
             tag_list.append(split[i])
             k += 1
