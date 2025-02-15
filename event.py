@@ -8,17 +8,18 @@ global_tag_set_image = None
 
 
 def event_add_tag(add_tag, tag_set, tag_list):
-    split = add_tag.split(",")
-    k = 0
-
-    for i in range(len(split)):
-        split[i] = split[i].strip().title()
-        if len(split[i]) and split[i] not in tag_list:
-            tag_list.append(split[i])
-            k += 1
-
-    if not k:
+    if global_tag_set_image is None:
         return tag_list
+
+    split = add_tag.split(",")
+
+    if not split:
+        return tag_list
+
+    for i, part in enumerate(split):
+        part = part.strip().title()
+        if len(part) and part not in tag_list:
+            tag_list.append(part)
 
     file = get_image_tag_file(tag_set, global_tag_set_image)
 
