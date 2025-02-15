@@ -87,4 +87,5 @@ def init():
 
 args = args_parse()
 init().launch(share=args.share,
+              allowed_paths=[tag_dir(), zip_dir()],
               server_name="0.0.0.0" if args.listen else "127.0.0.1")
