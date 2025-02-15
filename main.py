@@ -7,7 +7,7 @@ from utility import *
 def init():
     set_tag_set_state(startup_check())
 
-    with gr.Blocks(css=".gradio-container {min-width: 100% !important;}") as SDWebTag:
+    with gr.Blocks(css=".gradio-container {min-width: 100% !important;}", title="SD WebTag") as SDWebTag:
         with gr.Row():
             with gr.Column(scale=1):
                 with gr.Accordion("Tag Set"):
