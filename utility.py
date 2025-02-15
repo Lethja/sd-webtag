@@ -60,10 +60,10 @@ def get_all_tags(tag_set):
     for txt in r:
         s = read_tag_file(txt)
 
-        for i in range(len(s)):
-            s[i] = s[i].strip()
-            if len(s[i]) and s[i] not in t:
-                t.append(s[i])
+        for i, part in enumerate(s):
+            part = part.strip()
+            if part and part not in t:
+                t.append(part)
 
     t.sort()
     return t
@@ -104,10 +104,10 @@ def read_tag_file(file):
 
     s = c.split(",")
 
-    for i in range(len(s)):
-        s[i] = s[i].strip()
-        if not len(s[i]):
-            s.remove(s[i])
+    for i, part in enumerate(s):
+        part = part.strip()
+        if not part:
+            s.remove(part)
 
     return s
 
@@ -138,12 +138,8 @@ def startup_check():
         pathlib.Path(tag_dir()).mkdir(parents=True, exist_ok=True)
 
     existing_tag_sets = generate_tag_set_list()
-
-    if not existing_tag_sets or len(existing_tag_sets) == 0:
-        set_tag = "Default"
-        tag_set_directory(set_tag)
-    else:
-        set_tag = existing_tag_sets[0]
+    set_tag = next(iter(existing_tag_sets), "Default")
+    tag_set_directory(set_tag)
 
     return set_tag
 
@@ -167,10 +163,10 @@ def write_tags_to_file(tags, file):
 
 
 def zip_create_from_directory(directory):
-    from datetime import datetime
-    d = pathlib.PurePath(directory)
-    n = d.name + " " + datetime.utcnow().isoformat(timespec="seconds")
+    from datetime import datetime, timezone
 
+    d = pathlib.PurePath(directory)
+    n = d.name + " " + datetime.now(timezone.utc).isoformat(timespec="seconds")
     return shutil.make_archive(zip_dir() + "/" + n, "zip", d)
 
 
