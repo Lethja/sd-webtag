@@ -34,8 +34,8 @@ def args_parse():
                         help="Where to write Zips for exporting")
 
     args = parser.parse_args()
-    global_tag_sets_dir = args.path
-    global_zip_sets_dir = args.zip
+    global_tag_sets_dir = os.path.abspath(os.path.expandvars(os.path.expanduser(args.path)))
+    global_zip_sets_dir = os.path.abspath(os.path.expandvars(os.path.expanduser(args.zip)))
 
     return args
 
