@@ -7,8 +7,9 @@ global_tag_set_state = None
 global_tag_set_image = None
 
 
-def event_add_tag(add_tag, tag_set, tag_list):
-    if global_tag_set_image is None:
+def event_add_tag(add_tag, tag_set, tag_list, add_tag_all_checkbox):
+    # TODO: Add logic for when add_tag_all_checkbox is True
+    if global_tag_set_image is None and add_tag_all_checkbox is False:
         return tag_list
 
     split = add_tag.split(",")
@@ -27,11 +28,7 @@ def event_add_tag(add_tag, tag_set, tag_list):
 
     all_tags = get_all_tags(tag_set)
     tags = read_tag_file(file)
-    return gr.CheckboxGroup(label="Tags",
-                            elem_id="tags",
-                            interactive=True,
-                            choices=all_tags,
-                            value=tags)
+    return gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True, choices=all_tags, value=tags)
 
 
 def event_check_tag(tag_set, tag_list):
@@ -47,18 +44,13 @@ def event_explore_check(z):
 def event_export_reset(tag_set):
     # TODO: Workaround: https://github.com/gradio-app/gradio/issues/7788
     p = os.path.join(tag_dir(), tag_set)
-    return gr.FileExplorer(label="Exporting",
-                           height=200,
-                           root_dir=str(p))
+    return gr.FileExplorer(label="Exporting", height=200, root_dir=str(p))
 
 
 def event_export_tag_set(tag_set):
     p = os.path.join(tag_dir(), tag_set)
     zip_create_from_directory(p)
-    return gr.FileExplorer(label="Exports",
-                           glob="*.zip",
-                           height=200,
-                           root_dir=zip_dir())
+    return gr.FileExplorer(label="Exports", glob="*.zip", height=200, root_dir=zip_dir())
 
 
 def event_load_page():
@@ -81,12 +73,8 @@ def event_update_tag_dropdown(choice):
     tag_set_directory(choice)
     global global_tag_set_state
     global_tag_set_state = choice
-    return gr.Dropdown(show_label=False,
-                       allow_custom_value=True,
-                       elem_id="tag_set",
-                       container=False,
-                       choices=generate_tag_set_list(),
-                       value=choice)
+    return gr.Dropdown(show_label=False, allow_custom_value=True, elem_id="tag_set", container=False,
+                       choices=generate_tag_set_list(), value=choice)
 
 
 def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):
@@ -96,11 +84,7 @@ def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):
     global_tag_set_image = name[evt.index][0]
     file = get_image_tag_file(tag_set, global_tag_set_image)
     tags = read_tag_file(file)
-    return gr.CheckboxGroup(label="Tags",
-                            elem_id="tags",
-                            interactive=True,
-                            choices=all_tags,
-                            value=tags)
+    return gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True, choices=all_tags, value=tags)
 
 
 def event_update_tag_state(choice):
