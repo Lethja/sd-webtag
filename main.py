@@ -34,7 +34,7 @@ def init(tag_set_state):
                         add_tag_textbox = gr.Textbox(label="Add Tags", show_label=False, container=False,
                                                      placeholder="Enter tags here (seperated by ,) press return to add",
                                                      scale=1)
-                        add_tag_all_checkbox = gr.Checkbox(label="Add to All", value=False, interactive=True, scale=0)
+                        add_tag_all_checkbox = gr.Checkbox(label="Add to All", value=False, interactive=False, scale=0)
 
                 tag_list = gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True)
 
