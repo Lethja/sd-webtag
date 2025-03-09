@@ -53,11 +53,17 @@ def event_export_tag_set(tag_set):
     return gr.FileExplorer(label="Exports", glob="*.zip", height=200, root_dir=zip_dir())
 
 
-def event_load_page():
+def event_load_page(session_tag_set):
     global global_tag_set_state
-    d = event_update_tag_dropdown(global_tag_set_state)
-    g = populate_gallery(global_tag_set_state)
-    return d, g
+
+    if session_tag_set is None or session_tag_set.value is None:
+        tag_set = global_tag_set_state
+    else:
+        tag_set = session_tag_set.value
+
+    d, s = event_update_tag_dropdown(tag_set)
+    g = populate_gallery(tag_set)
+    return d, g, s
 
 
 def event_upload_files(files, tag_set):
@@ -73,8 +79,8 @@ def event_update_tag_dropdown(choice):
     tag_set_directory(choice)
     global global_tag_set_state
     global_tag_set_state = choice
-    return gr.Dropdown(show_label=False, allow_custom_value=True, elem_id="tag_set", container=False,
-                       choices=generate_tag_set_list(), value=choice)
+    return [gr.Dropdown(show_label=False, allow_custom_value=True, elem_id="tag_set", container=False,
+                       choices=generate_tag_set_list(), value=choice), gr.State(value=choice)]
 
 
 def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):

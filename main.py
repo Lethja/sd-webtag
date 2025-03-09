@@ -8,10 +8,12 @@ def init():
     set_tag_set_state(startup_check())
 
     with gr.Blocks(css=".gradio-container {min-width: 100% !important;}", title="SD WebTag") as SDWebTag:
+        session_tag_set = gr.State(value=None)
         with gr.Row():
             with gr.Column(scale=1):
                 with gr.Accordion("Tag Set"):
-                    tag_set_dropdown = event_update_tag_dropdown(set_tag_get_state())
+                    tag_set_dropdown = gr.Dropdown(show_label=False, allow_custom_value=True, elem_id="tag_set",
+                                                   container=False, choices=generate_tag_set_list())
                     with gr.Blocks():
                         upload = gr.UploadButton(label="Upload/Import", file_types=["image", "text"],
                                                  file_count="multiple")
@@ -35,11 +37,11 @@ def init():
 
                 tag_list = gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True)
 
-        SDWebTag.load(event_load_page, outputs=[tag_set_dropdown, gallery])
+        SDWebTag.load(event_load_page, inputs=[session_tag_set], outputs=[tag_set_dropdown, gallery, session_tag_set])
 
         add_tag_textbox.submit(event_add_tag,
                                inputs=[add_tag_textbox, tag_set_dropdown, tag_list, add_tag_all_checkbox],
-                               outputs=tag_list)
+                               outputs=[tag_list, session_tag_set])
 
         explore.change(event_explore_check, inputs=explore, outputs=download)
 
