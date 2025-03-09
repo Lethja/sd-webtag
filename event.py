@@ -7,7 +7,7 @@ global_tag_set_state = None
 global_tag_set_image = None
 
 
-def event_add_tag(add_tag, tag_set, tag_list, add_tag_all_checkbox):
+def event_add_tag(add_tag, tag_set, tag_list, add_tag_all_checkbox, session_tag_set):
     # TODO: Add logic for when add_tag_all_checkbox is True
     if global_tag_set_image is None and add_tag_all_checkbox is False:
         return tag_list
@@ -22,7 +22,7 @@ def event_add_tag(add_tag, tag_set, tag_list, add_tag_all_checkbox):
         if len(part) and part not in tag_list:
             tag_list.append(part)
 
-    file = get_image_tag_file(tag_set, global_tag_set_image)
+    file = get_image_tag_file(tag_set, session_tag_set.value)
 
     write_tags_to_file(tag_list, file)
 
@@ -84,13 +84,12 @@ def event_update_tag_dropdown(choice):
 
 
 def event_update_tag_checkbox_group(evt: gr.SelectData, tag_set, name):
-    global global_tag_set_image
-
     all_tags = get_all_tags(tag_set)
-    global_tag_set_image = name[evt.index][0]
-    file = get_image_tag_file(tag_set, global_tag_set_image)
+    session_img = gr.State(name[evt.index][0])
+    file = get_image_tag_file(tag_set, session_img.value)
     tags = read_tag_file(file)
-    return gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True, choices=all_tags, value=tags)
+
+    return [gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True, choices=all_tags, value=tags), session_img]
 
 
 def event_update_tag_state(choice):

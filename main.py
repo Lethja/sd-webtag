@@ -8,7 +8,8 @@ def init():
     set_tag_set_state(startup_check())
 
     with gr.Blocks(css=".gradio-container {min-width: 100% !important;}", title="SD WebTag") as SDWebTag:
-        session_tag_set = gr.State(value=None)
+        session_set = gr.State(value=None)
+        session_img = gr.State(value=None)
         with gr.Row():
             with gr.Column(scale=1):
                 with gr.Accordion("Tag Set"):
@@ -37,11 +38,11 @@ def init():
 
                 tag_list = gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True)
 
-        SDWebTag.load(event_load_page, inputs=[session_tag_set], outputs=[tag_set_dropdown, gallery, session_tag_set])
+        SDWebTag.load(event_load_page, inputs=[session_set], outputs=[tag_set_dropdown, gallery, session_set])
 
         add_tag_textbox.submit(event_add_tag,
-                               inputs=[add_tag_textbox, tag_set_dropdown, tag_list, add_tag_all_checkbox],
-                               outputs=[tag_list, session_tag_set])
+                               inputs=[add_tag_textbox, tag_set_dropdown, tag_list, add_tag_all_checkbox, session_img],
+                               outputs=tag_list)
 
         explore.change(event_explore_check, inputs=explore, outputs=download)
 
@@ -52,11 +53,11 @@ def init():
 
         tag_list.input(event_check_tag, inputs=[tag_set_dropdown, tag_list], outputs=tag_list)
 
-        tag_set_dropdown.input(event_update_tag_dropdown, inputs=tag_set_dropdown, outputs=tag_set_dropdown)
+        tag_set_dropdown.input(event_update_tag_dropdown, inputs=tag_set_dropdown, outputs=[tag_set_dropdown, session_set])
 
         tag_set_dropdown.input(event_update_gallery, inputs=tag_set_dropdown, outputs=gallery)
 
-        gallery.select(event_update_tag_checkbox_group, inputs=[tag_set_dropdown, gallery], outputs=tag_list)
+        gallery.select(event_update_tag_checkbox_group, inputs=[tag_set_dropdown, gallery], outputs=[tag_list, session_img])
 
         upload.upload(event_upload_files, inputs=[upload, tag_set_dropdown], outputs=gallery)
 
