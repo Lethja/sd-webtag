@@ -111,10 +111,8 @@ def read_tag_file(file):
 
     s = c.split(",")
 
-    for i, part in enumerate(s):
-        part = part.strip()
-        if not part:
-            s.remove(part)
+    # Remove empty or whitespace-only elements
+    s = [part.strip() for part in s if part.strip()]
 
     return s
 
