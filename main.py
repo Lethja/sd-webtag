@@ -51,7 +51,7 @@ def init(tag_set_state):
                                                                                         inputs=tag_set_dropdown,
                                                                                         outputs=explore)
 
-        tag_list.input(event_check_tag, inputs=[tag_set_dropdown, tag_list], outputs=tag_list)
+        tag_list.input(event_check_tag, inputs=[tag_set_dropdown, tag_list, session_img], outputs=tag_list)
 
         tag_set_dropdown.input(event_update_tag_dropdown, inputs=tag_set_dropdown, outputs=[tag_set_dropdown, session_set])
 

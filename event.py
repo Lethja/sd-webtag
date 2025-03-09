@@ -9,8 +9,6 @@ global_tag_set_image = None
 
 def event_add_tag(add_tag, tag_set, tag_list, add_tag_all_checkbox, session_tag_set):
     # TODO: Add logic for when add_tag_all_checkbox is True
-    if global_tag_set_image is None and add_tag_all_checkbox is False:
-        return tag_list
 
     split = add_tag.split(",")
 
@@ -31,8 +29,8 @@ def event_add_tag(add_tag, tag_set, tag_list, add_tag_all_checkbox, session_tag_
     return gr.CheckboxGroup(label="Tags", elem_id="tags", interactive=True, choices=all_tags, value=tags)
 
 
-def event_check_tag(tag_set, tag_list):
-    file = get_image_tag_file(tag_set, global_tag_set_image)
+def event_check_tag(tag_set, tag_list, set_image):
+    file = get_image_tag_file(tag_set, set_image.value)
     write_tags_to_file(tag_list, file)
     return tag_list
 
