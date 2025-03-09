@@ -14,9 +14,16 @@ def args_parse():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--path",
+    parser.add_argument("--path-allow",
+                        action="append",
+                        default=[],
+                        help="Other paths SDWebTag is allowed to access. " +
+                             "Usually not needed but useful if you have made a images in a tag set that symlinks to other paths to save space." +
+                             "You can specify this multiple times to add multiple paths. Every sub-directory of a path will also have access")
+
+    parser.add_argument("--set",
                         default=os.path.abspath("Sets"),
-                        help="Where to store images and their tags")
+                        help="The tag sets directory. Should have read and write access by the process user.")
 
     parser.add_argument("--listen",
                         action="store_true",
@@ -31,10 +38,10 @@ def args_parse():
 
     parser.add_argument("--zip",
                         default=os.path.abspath("Zips"),
-                        help="Where to write Zips for exporting")
+                        help="The zip export directory. Should have read and write access by the process user.")
 
     args = parser.parse_args()
-    global_tag_sets_dir = os.path.abspath(os.path.expandvars(os.path.expanduser(args.path)))
+    global_tag_sets_dir = os.path.abspath(os.path.expandvars(os.path.expanduser(args.set)))
     global_zip_sets_dir = os.path.abspath(os.path.expandvars(os.path.expanduser(args.zip)))
 
     return args

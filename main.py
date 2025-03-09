@@ -3,13 +3,13 @@
 from event import *
 from utility import *
 
-
-def init():
-    set_tag_set_state(startup_check())
+def init(tag_set_state):
+    set_tag_set_state(tag_set_state)
 
     with gr.Blocks(css=".gradio-container {min-width: 100% !important;}", title="SD WebTag") as SDWebTag:
         session_set = gr.State(value=None)
         session_img = gr.State(value=None)
+
         with gr.Row():
             with gr.Column(scale=1):
                 with gr.Accordion("Tag Set"):
@@ -65,5 +65,5 @@ def init():
 
 
 args = args_parse()
-init().launch(share=args.share, allowed_paths=[tag_dir(), zip_dir()],
+init(startup_check()).launch(share=args.share, allowed_paths=[tag_dir(), zip_dir()] + args.path_allow,
               server_name="0.0.0.0" if args.listen else "127.0.0.1")
