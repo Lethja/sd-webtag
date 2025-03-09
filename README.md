@@ -66,17 +66,23 @@ then write the following:
 python3 main.py
 ```
 Append the following options as needed and then press enter to run:
-- `--path`: Specify a custom directory to store images and tags.
-  - If none is specified, a directory named `Sets` will be used. 
+- `--set`: Specify a custom directory to store tags sets.
+  - If none is specified, a directory named `Sets` in the current directory will be used. 
   - If the folder doesn't exist it will be created.
 - `--zip`: Specify a custom output directory for ZIP exports. 
-  - If none is specified, a directory named `Zips` will be used. 
+  - If none is specified, a directory named `Zips` in the current directory will be used. 
   - If the folder doesn't exist it will be created.
 - `--listen`: Make the server globally accessible within the same network (useful for local sharing).
+  - If not specified only the host will be able to connect to the server.
   - In a typical home network environment, a home routers [NAT](https://en.wikipedia.org/wiki/Network_address_translation) will prevent access to this server from the Internet but allow access to any other machines in the same subnet.
   - In a typical cloud hosting environment at least one network interface will be given a public IP which could result in strangers connecting to the server. Use this option with caution in these environments. 
 - `--share`: Enable SSH tunneling to share the app via an external [Gradio link](https://gradio.app).
-  - If you want to share your instance 
+  - This option makes it easy to share your instance with someone else.
+- `--path-allow` Allows SDWebTag to access paths outside of `set` and `zip`. Most users won't need to touch this option.
+  - This can be convenient if you want to symlink images or folders that exist somewhere else to save disk space.
+  - Every subdirectory of an allowed path will also be allowed.
+  - The `--path-allow` parameter can be used multiple times to specify multiple different paths.
+    For example: `--path-allow /mnt/e6ai --path-allow /mnt/tantabus`
 
 > Tip: It may be more convenient to write your own launcher script than repeating these steps each time \
 > \
